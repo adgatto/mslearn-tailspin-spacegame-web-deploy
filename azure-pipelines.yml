@@ -8,7 +8,7 @@ variables:
 stages:
 - stage: 'Build'
   displayName: 'Build the web application'
-  jobs: 
+  jobs:
   - job: 'Build'
     displayName: 'Build job'
     pool:
@@ -25,6 +25,11 @@ stages:
       displayName: 'Use .NET SDK $(dotnetSdkVersion)'
       inputs:
         version: '$(dotnetSdkVersion)'
+
+    - script: |
+        sudo apt-get update
+        sudo apt-get install -y python3 make g++ libssl-dev
+      displayName: 'Install build dependencies for node-gyp'
 
     - task: Npm@1
       displayName: 'Run npm install'
